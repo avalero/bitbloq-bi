@@ -1,4 +1,43 @@
 module.exports = {
-    "extends": "airbnb-base",
-    "parser": "typescript-eslint-parser"
-};
+    env: {
+      'es6': true,
+      'node': true,
+    },
+    extends: 'airbnb-base',
+    plugins: ['jsdoc', 'prettier'],
+    rules: {
+      'prettier/prettier': 'error',
+      'jsdoc/check-param-names': 1,
+      'jsdoc/check-tag-names': 1,
+      'jsdoc/check-types': 1,
+      'jsdoc/newline-after-description': 1,
+      'jsdoc/require-description-complete-sentence': 1,
+      'jsdoc/require-example': 0,
+      'jsdoc/require-hyphen-before-param-description': 1,
+      'jsdoc/require-param': 1,
+      'jsdoc/require-param-description': 1,
+      'jsdoc/require-param-name': 1,
+      'jsdoc/require-param-type': 1,
+      'jsdoc/require-returns-description': 1,
+      'jsdoc/require-returns-type': 1,
+  
+      // Some of these options are to make prettier happy. 
+      // Some are just my style.
+      'indent': ['error', 2],
+      'linebreak-style': ['error', 'unix'],
+      'quotes': ['error', 'single'],
+      'semi': ['error', 'always'],
+      'linebreak-style': ['error', 'unix'],
+      'strict': 'off',
+      'no-mixed-operators': 'off',
+      'max-len': 'off',
+      'object-curly-newline': 'off',
+      'arrow-parens': 'off',
+      'function-paren-newline': 'off',
+      'wrap-iife': 'off',
+      'no-param-reassign': 'off',
+      'consistent-return': 'off',
+      'comma-dangle': 'off',
+      'space-before-function-paren': 'off',
+    },
+  };
