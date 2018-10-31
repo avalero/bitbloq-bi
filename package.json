@@ -1,0 +1,39 @@
+{
+  "name": "bitbloq-bi",
+  "version": "1.0.0",
+  "description": "bitbloq data analysis",
+  "main": "./src/App.ts",
+  "scripts": {
+    "start": "npm run build:live",
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bitbloq/bitbloq-bi.git"
+  },
+  "author": "Alberto Valero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bitbloq/bitbloq-bi/issues"
+  },
+  "homepage": "https://github.com/Bitbloq/bitbloq-bi#readme",
+  "devDependencies": {
+    "@types/node": "^10.12.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "nodemon": "^1.18.5",
+    "rimraf": "^2.6.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.4",
+    "typescript-eslint-parser": "^20.1.0"
+  },
+  "dependencies": {
+    "@types/mongodb": "^3.1.14",
+    "assert": "^1.4.1",
+    "mongodb": "^3.1.8"
+  }
+}
