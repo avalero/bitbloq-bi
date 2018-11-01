@@ -31,7 +31,7 @@ export default class DbClient {
   public async getCollection(collectionName: string): Promise<Collection> {
     if (this.db) {
       try {
-        const collection:Collection = await this.db.collection(collectionName);
+        const collection: Collection = await this.db.collection(collectionName);
         console.log(`Collection ${collectionName} opened`);
         return collection;
       } catch (error) {
