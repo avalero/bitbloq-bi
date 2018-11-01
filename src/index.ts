@@ -1,34 +1,30 @@
-import { MongoClient, Collection } from 'mongodb';
+import { Collection} from 'mongodb';
+import DbClient from './DbClient';
+import Users from './collections/Users'
+import NewUsersReport, {NumberYear} from './reports/NewUsersReport'
 
 const url: string = 'mongodb://localhost:27017';
-const dbName = 'bitbloq';
-
-const countUsers = async (collection: Collection): Promise<number> => {
-  const items = await collection.find().toArray();
-  return items.length;
-};
-
-const countChromeAppUsers = async (collection: Collection, chromeapp: boolean = true): Promise<number> => {
-  const items = await collection.find({ chromeapp }).toArray();
-  return items.length;
-};
+const dbName: string = 'bitbloq';
 
 (async () => {
   try {
-    const client = await MongoClient.connect(
-      url,
-      { useNewUrlParser: true }
-    );
-    const db = await client.db(dbName);
-    console.log('Connected to db');
-    const collection = await db.collection('users');
-    console.log('Colletion opened');
-    let number: number = await countUsers(collection);
-    console.log(`Hay ${number} usuarios`);
-    number = await countChromeAppUsers(collection, false);
-    console.log(`Hay ${number} usuarios con chromeApp`);
-    if (client) client.close();
+    const client: DbClient = new DbClient(url, dbName);
+    await client.connect();
+    const collection: Collection = await client.getCollection(Users.collectionName);
+    const usersCollection = new Users(collection);
+    const usersReport = new NewUsersReport(usersCollection);
+
+
+    const years:Array<number> = [2015, 2016, 2017, 2018];
+    const newUsers:Array<NumberYear> = await usersReport.newUsersPerYear(years);
+
+    for (let users of newUsers){
+      console.log(users);
+    }
+
+    await client.close();
   } catch (error) {
-    console.log(error);
+    console.dir(error);
+    throw error;
   }
 })();
