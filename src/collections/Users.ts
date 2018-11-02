@@ -20,7 +20,7 @@ export default class Users extends BitbloqCollection {
     return await this.collection.find({ createdAt: { $gt: from, $lt: to } }).toArray();
   }
 
-  public async countNewUsersByMonth(year: number, month: number = 1): Promise<number> {
+  public async countNewUsersByYearMonth(year: number, month: number = 1): Promise<number> {
     if (month > 12) throw new Error(`Invalid month ${month}`);
 
     let mm: string = '';

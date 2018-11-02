@@ -1,0 +1,7 @@
+{
+  "mongo-nodes":[
+    "localhost"
+  ],
+  "port": 27017,
+  "db": "bitbloq"
+}

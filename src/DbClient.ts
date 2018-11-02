@@ -6,8 +6,17 @@ export default class DbClient {
   private url: string;
   private dbName: string;
 
-  constructor(url: string, dbName: string) {
-    this.url = url;
+  constructor(nodes: Array<string>, port:number, dbName: string) {
+    this.url = 'mongodb://';
+      nodes.forEach( node => {
+      this.url += `${node}:${port},`; 
+    });
+    this.url = this.url.slice(0,this.url.length -1 );
+    
+    //FIXME
+    if(nodes.length > 1) this.url += "?replicaSet=name"
+    
+    console.log(this.url);
     this.dbName = dbName;
     this.client = undefined;
     this.db = undefined;
@@ -19,6 +28,7 @@ export default class DbClient {
         this.url,
         { useNewUrlParser: true }
       );
+      console.log('connected');
       this.db = await this.client.db(this.dbName);
       console.log(`Connected to db ${this.url}/${this.dbName}`);
       return this.db;
