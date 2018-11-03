@@ -1,8 +1,13 @@
+import * as fs from 'fs';
+
 import { Collection } from 'mongodb';
 import DbClient from './DbClient';
 import Users from './collections/Users';
-import NewUsersReport, { NumberYear, FullYear, YearsReport } from './reports/NewUsersReport';
+import NewUsersReport from './reports/NewUsersReport';
+import { NumberYear, FullYear, YearsReport } from './reports/Report';
+
 import config from '../res/config.json'
+
 
 const nodes: Array<string> = config["mongo-nodes"];
 const port: number = config.port;
@@ -19,21 +24,20 @@ console.log(`Data from: ${config}`);
     const usersReport = new NewUsersReport(usersCollection);
 
     const years: Array<number> = [2015, 2016, 2017, 2018];
-
-    const newUsersPerYear: Array<NumberYear> = await usersReport.newUsersPerYear(years);
-    for (let users of newUsersPerYear) {
-      console.log(users);
-    }
-
-    let newUserPerYearMonth: Array<FullYear> = [];
-    for (let year of years){
-      const fullYear:FullYear = await usersReport.newUsersPerMonthYear(year);
-      newUserPerYearMonth.push(fullYear);
-      console.log(fullYear);
-    }
-
     let fullReport: YearsReport = await usersReport.fullReport(years);
+  
+    //Save full report to file
+    fs.writeFileSync('/home/avalero/file.txt', '');
+    fullReport.forEach( year => {
+      year.months.forEach( (number,month) =>{
+        const data:string = `${year.year}\t${month+1}\t${year.year}-${month+1}\t${number}\r\n`;
+        fs.appendFileSync('/home/avalero/file.txt', data);
+      });
+    });
+    
+    
     await client.close();
+
   } catch (error) {
     console.dir(error);
     throw error;

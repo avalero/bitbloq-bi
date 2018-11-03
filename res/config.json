@@ -1,4 +1,7 @@
 {
+  "aamongo-nodes":[
+    "172.20.228.7"
+  ],
   "mongo-nodes":[
     "localhost"
   ],
